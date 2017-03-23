@@ -1,0 +1,26 @@
+﻿@model Tic_Tack_Jack.Models.ForumPost
+@{
+    ViewBag.Title = "createForumPost";
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Skrifa þráð</legend>
+        <ul>
+            <li>
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Content)
+                @Html.TextAreaFor(m => m.Content)
+            </li>
+        </ul>
+                @Html.TextBoxFor(m => m.Author, new { @Value = WebSecurity.CurrentUserName, @type = "hidden" })
+                @Html.TextBoxFor(m => m.PostDate, new { @Value = DateTime.Now.ToString(), @type = "hidden" })
+        <input type="submit" value="Skrá þráð" />
+    </fieldset>
+}

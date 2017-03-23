@@ -1,0 +1,35 @@
+﻿@model Tic_Tack_Jack.Models.RegisterExternalLoginModel
+@{
+    ViewBag.Title = "Nýskráning";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Tenging við @ViewBag.ProviderDisplayName reikninginn.</h2>
+</hgroup>
+
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Association Form</legend>
+        <p>
+            Þú hefur núna tengt <strong>@ViewBag.ProviderDisplayName</strong> við reikninginn þinn.
+            Veldu notendanafn fyrir vefsíðuna og veldu nýskrá.
+        </p>
+        <ol>
+            <li class="name">
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+            </li>
+        </ol>
+        @Html.HiddenFor(m => m.ExternalLoginData)
+        <input type="submit" value="Nýskrá" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

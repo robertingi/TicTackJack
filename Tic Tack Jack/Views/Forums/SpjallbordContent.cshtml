@@ -1,0 +1,48 @@
+﻿@model Tic_Tack_Jack.Models.ForumPostContent
+
+@{
+    ViewBag.Title = "SpjallbordContent";
+}
+
+<h2>SpjallbordContent</h2>
+<header>
+    <aside>
+        @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+<body>
+    <div class="blog-entry">
+        <h3>@Model.fp.Title</h3>
+        <h2>@Model.fp.Author</h2>
+        <p class="blog-text">
+            @Model.fp.Content
+        </p>
+
+        <div class="comment-block">
+
+
+            @foreach (var c in Model.fpc)
+            {
+                <div class="comment">
+                    <span>@c.Author</span>
+                    <span>@c.date</span>
+                    <p>@c.Content</p>
+                </div>
+            }
+
+
+            <form action="/Forums/SpjallbordContent" method="post">
+                <div>
+                    <input type="hidden" name="Author" value="@WebSecurity.CurrentUserName"/>
+                    <input type="hidden" name="pid" value="@Model.fp.ID" />
+                </div>
+
+                <div>
+                    <input type="text" name="Content" />
+                </div>
+                <input type="submit" value="comment" />
+            </form>
+
+        </div>
+    </div>
+</body>

@@ -1,0 +1,41 @@
+﻿@model Tic_Tack_Jack.Models.RegisterModel
+@{
+    ViewBag.Title = "Nýskráning";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Create a new account.</h2>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Registration Form</legend>
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.UserName)</td>
+                <td>@Html.TextBoxFor(m => m.UserName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Password)</td>
+                <td>@Html.PasswordFor(m => m.Password)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.ConfirmPassword)</td>
+                <td>@Html.PasswordFor(m => m.ConfirmPassword)</td>
+            </tr>
+            <tr>
+            <td><p>Ég samþykki skilmálana @Html.RadioButtonFor(m => m.AcceptAgreement, "já")</p>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Nýskrá" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

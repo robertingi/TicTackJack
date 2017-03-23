@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Blackjack";
+}
+
+<header>
+    <script src="~/Scripts/blackjack.js"></script>
+    <aside >
+        @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+
+<div id="bjcontainer">
+	<!-- Spilari 7 -->
+	<div id="player6" class="playingField">
+		<!-- Nafn spilara -->
+		<div id="player6Name" class="textBox name">&nbsp;</div>
+		<!-- Inneign spilara -->
+		<div id="player6Credits" class="textBox dollars">&nbsp;</div>
+		<!-- Stig spilara -->
+		<div id="player6Score"  class="textBox">&nbsp;</div>
+		<!-- Veðmál spilara -->
+		<div id="player6Bet"    class="textBox dollars">&nbsp;</div>
+		<!-- Niðurstaða leikmanns úr spili -->
+		<div id="player6Result" class="textBox result">&nbsp;</div>
+		<!-- Spil leikmanns -->
+		<div id="player6Cards"  class="cardArea"></div>
+	</div>
+	<!-- Gjafari. -->
+	<div id="dealer" class="playingField">
+		<div class="textBox name">Gjafari</div>
+		<div id="dealerScore" class="textBox">&nbsp;</div>
+		<div id="dealerCards" class="cardArea"></div>
+	</div>
+	<!-- Spilari 1 -->
+	<div id="player0" class="playingField">
+		<div id="player0Name" class="textBox name">&nbsp;</div>
+		<div id="player0Credits" class="textBox dollars">&nbsp;</div>
+		<div id="player0Score"  class="textBox">&nbsp;</div>
+		<div id="player0Bet"    class="textBox dollars">&nbsp;</div>
+		<div id="player0Result" class="textBox result">&nbsp;</div>
+		<div id="player0Cards"  class="cardArea"></div>
+	</div>
+	<!-- Spilari 6 -->
+	<div id="player5" class="playingField">
+		<div id="player5Name" class="textBox name">&nbsp;</div>
+		<div id="player5Credits" class="textBox dollars">&nbsp;</div>
+		<div id="player5Score"  class="textBox">&nbsp;</div>
+		<div id="player5Bet"    class="textBox dollars">&nbsp;</div>
+		<div id="player5Result" class="textBox result">&nbsp;</div>
+		<div id="player5Cards"  class="cardArea"></div>
+	</div>
+	<!-- Stjórnborð -->
+	<div class="center">
+		<!-- Takki til að setjast við borðið -->
+		<input type="button" class="sitdown" value="Setjast" onclick="sit();" />
+		<!-- 1,5,10,50 spilapeningar fyrir veðmál -->
+		<img id="bet1" src="~/Images/blackjack/1.png" alt="5" onclick="changeBet(+1); return false;" style=" " />
+		<img id="bet5" src="~/Images/blackjack/5.png" alt="5" onclick="changeBet(+5); return false;" style=" " />
+		<img id="bet10" src="~/Images/blackjack/10.png" alt="5" onclick="changeBet(+10); return false;" style=" " />
+		<img id="bet50" src="~/Images/blackjack/50.png" alt="5" onclick="changeBet(+50); return false;" style=" " />
+		<!-- Textabox sem birtir upphæð sem leikmaður vill leggja undir -->
+		<div id="betting" style=" ";>&nbsp;</div>
+		<!-- Hreinsa og leggja undir takkar -->
+		<img id="clear" src="~/Images/blackjack/clear.png" alt="Hreinsa" onclick="changeBet(0); return false;" style=" " />
+		<img id="deal" src="~/Images/blackjack/bet.png" alt="Leggja undir" onclick="makeBet(); return false;" style=" " />
+		<!-- Gefa og standa takkar -->
+		<img id="hit" src="~/Images/blackjack/hit.png" alt="Gefa" onclick="playerHit();" style="display: none;" />
+		<img id="stand" src="~/Images/blackjack/stand.png" alt="Stoppa" onclick="playerStand();" style="display: none;" />
+		<!-- Teljari fyrir aðgerðir leikmanna -->
+		<div id="counter">&nbsp;</div>
+	</div>
+	<!-- Spilari 2 -->
+	<div id="player1" class="playingField">
+		<div id="player1Name" class="textBox name">&nbsp;</div>
+		<div id="player1Credits" class="textBox dollars">&nbsp;</div>
+		<div id="player1Score"  class="textBox">&nbsp;</div>
+		<div id="player1Bet"    class="textBox dollars">&nbsp;</div>
+		<div id="player1Result" class="textBox result">&nbsp;</div>
+		<div id="player1Cards"  class="cardArea"></div>
+	</div>
+	<!-- Spilari 5 -->
+	<div id="player4" class="playingField">
+		<div id="player4Name" class="textBox name">&nbsp;</div>
+		<div id="player4Credits" class="textBox dollars">&nbsp;</div>
+		<div id="player4Score"  class="textBox">&nbsp;</div>
+		<div id="player4Bet"    class="textBox dollars">&nbsp;</div>
+		<div id="player4Result" class="textBox result">&nbsp;</div>
+		<div id="player4Cards"  class="cardArea"></div>
+	</div>
+	<!-- Spilari 4 -->
+	<div id="player3" class="playingField">
+		<div id="player3Name" class="textBox name">&nbsp;</div>
+		<div id="player3Credits" class="textBox dollars">&nbsp;</div>
+		<div id="player3Score"  class="textBox">&nbsp;</div>
+		<div id="player3Bet"    class="textBox dollars">&nbsp;</div>
+		<div id="player3Result" class="textBox result">&nbsp;</div>
+		<div id="player3Cards"  class="cardArea"></div>
+	</div>
+	<!-- Spilari 3 -->
+	<div id="player2" class="playingField">
+		<div id="player2Name" class="textBox name">&nbsp;</div>
+		<div id="player2Credits" class="textBox dollars">&nbsp;</div>
+		<div id="player2Score"  class="textBox">&nbsp;</div>
+		<div id="player2Bet"    class="textBox dollars">&nbsp;</div>
+		<div id="player2Result" class="textBox result">&nbsp;</div>
+		<div id="player2Cards"  class="cardArea"></div>
+	</div>
+</div><!-- Container -->

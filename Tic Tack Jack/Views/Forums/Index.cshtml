@@ -1,0 +1,37 @@
+﻿@model Tic_Tack_Jack.Models.ForumpostAndStatus
+
+@{
+    ViewBag.Title = "Spjallbord";
+}
+<header>
+    <aside >
+        @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+<body>
+    @if(Model.Status >= 1)
+    {
+        @Html.ActionLink("Skrifa nýjan þráð!", "createForumPost", "Forums")
+    }
+    <div>
+        <table>
+            <tr>
+                <th>Titill</th>
+                <th>Höfundur</th>
+                <th>Dagsetning</th>
+            </tr>
+            @foreach(var f in Model.fp)
+            {<tr>
+                <td>
+                   <a href="/Forums/Details/@f.ID">@f.Title</a>
+                </td>
+                <td>
+                    <a href="/Home/ProfilePage/@f.ID">@f.Author</a>
+                </td>
+                <td>
+                    @f.PostDate
+                </td>
+             </tr>}
+        </table>
+    </div>
+</body>

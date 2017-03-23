@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Tic_Tack_Jack.Models.Game>
+@{
+    ViewBag.Title = "MyllaLobby";
+}
+
+
+
+<header>
+    <aside >
+        @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+<body>
+    <div id ="ticlobby">
+        <h2>Mylluleikir</h2>
+        <h4> Hér eru mylluleikir sem eru active, og nafn notanda sem bjó hann til....</h4>
+        <ul>
+        @foreach (var game in Model)
+        {
+	        <li>@Html.ActionLink(game.Name, "TicTacToe", "Game", new { ID = game.ID, u = WebSecurity.CurrentUserName }, null)</li>
+        }
+        </ul>
+    @Html.ActionLink("Smelltu hér til að búa til nýjann leik", "createTicTacToe", "Game")
+        </div>
+</body>

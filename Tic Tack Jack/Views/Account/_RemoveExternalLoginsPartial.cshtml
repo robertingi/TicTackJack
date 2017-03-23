@@ -1,0 +1,35 @@
+﻿@model ICollection<Tic_Tack_Jack.Models.ExternalLogin>
+
+@if (Model.Count > 0)
+{
+    <h3>Bætu við öðrum reikning</h3>
+    <table>
+        <tbody>
+        @foreach (Tic_Tack_Jack.Models.ExternalLogin externalLogin in Model)
+        {
+            <tr>
+                <td>@externalLogin.ProviderDisplayName</td>
+                <td>
+                    @if (ViewBag.ShowRemoveButton)
+                    {
+                        using (Html.BeginForm("Disassociate", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <fieldset>
+                                <legend></legend>
+                                @Html.Hidden("provider", externalLogin.Provider)
+                                @Html.Hidden("providerUserId", externalLogin.ProviderUserId)
+                                <input type="submit" value="Remove" title="Fjarlægja @externalLogin.ProviderDisplayName upplýsingar af reikningum" />
+                            </fieldset>
+                        }
+                    }
+                    else
+                    {
+                        @: &nbsp;
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

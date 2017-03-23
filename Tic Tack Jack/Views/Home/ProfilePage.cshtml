@@ -1,0 +1,86 @@
+﻿@model Tic_Tack_Jack.Models.ProfilePage
+
+<hgroup class="title">
+    <h1>@Model.UserName</h1>
+</hgroup>
+<header>
+    <aside>
+        @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+<body>
+    <p class="message-success">@ViewBag.StatusMessage</p>
+    <div id="MyProfile">
+        <fieldset id="Userinfo">
+            <legend>Upplýsingar</legend>
+            <form>
+                <p>
+                    <img src="~/Images/Chomp.jpg" />
+                    <strong>@Model.UserName</strong>.</p>
+                <p>@Html.ActionLink("Link", "Likeinc", new { Model.ID }) Like stig: @Model.Likes</p>
+                @if (Model.Online)
+                { <p>@Model.UserName er tengdur </p>}
+                else
+                {<p>@Model.UserName er ekki tengdur </p>}
+            </form>
+        </fieldset>
+        <fieldset id="UserStats">
+            <legend>Stig</legend>
+            <form>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Sigrar </th>
+                        <th>Tap </th>
+                    </tr>
+                    <tr>
+                        <th>Tic Tac Toe</th>
+                        <td>
+                            @Model.TICwins
+                        </td>
+                        <td>
+                            @Model.TICloss
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </fieldset>
+    </div>
+    <fieldset id="UserComments">
+        <legend>Athugasemdir</legend>
+        @foreach (var m in Model.UcL)
+        {
+            <div class="Ucomment">
+                <table>
+                    <tr>
+                        <td>@m.Author</td>
+                        <td>@m.date.ToShortDateString()</td>
+                    </tr>
+                    <tr>
+                        <td>@m.Content</td>
+                    </tr>
+                </table>
+            </div>
+        }
+    </fieldset>
+    @if (@WebSecurity.IsAuthenticated)
+    {
+        <div id="CreateComment">
+            <form action="/Home/ProfilePage" method="post">
+                <div>
+                    <input type="hidden" name="Author" value="@WebSecurity.CurrentUserName"/>
+                    <input type="hidden" name="id" value="@Model.ID" />
+                    <input type="hidden" name ="pid" value="@WebSecurity.CurrentUserId">
+                </div>
+                <div>
+                    <input type="text" name="Content" />
+                </div>
+                <input type="submit" value="comment" />
+            </form>
+
+        </div>    }
+    </fieldset>
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

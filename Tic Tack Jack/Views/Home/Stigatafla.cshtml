@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Tic_Tack_Jack.Models.UserStats>
+
+@{
+    ViewBag.Title = "Stigatafla";
+}
+<header>
+    <aside >
+            @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Total Games</th>
+                <th>Tic Tac Toe</th>
+            </tr>
+            @foreach(var s in Model)
+            {<tr>
+                <td>
+                    <a href="/Home/ProfilePage/@s.ID">@s.userName</a>
+                </td>
+                <td>
+                    @s.totalGames
+                </td>
+                <td>
+                    @s.TICWins / @s.TICLoss
+                </td>
+             </tr>}
+        </table>
+    </div>
+</body>

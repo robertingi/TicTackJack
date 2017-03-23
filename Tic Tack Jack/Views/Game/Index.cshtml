@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Tic_Tack_Jack.Models.Game>
+
+@{
+    ViewBag.Title = "Leikir";
+}
+<h2>Leikir</h2>
+
+<header>
+    <aside >
+        @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+<body>
+    <div>
+        <p> Hér koma leikir</p>
+        <ul>
+            <li>@Html.ActionLink("Mylla", "MyllaLobby","Game", null)</li>
+             <li>@Html.ActionLink("BlackJack", "Blackjack","Game", null)</li>
+        </ul>
+    </div>
+</body>

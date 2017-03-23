@@ -1,0 +1,13 @@
+﻿@model Tic_Tack_Jack.Models.LoginModel
+@{
+    ViewBag.Title = "LoginError";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section>
+<h1><strong>verður að vera skráður inn til að sjá þessa síðu.</strong> </h1>
+
+<h2>Notaðu aðganginn þinn til að innskrá</h2>
+
+@Html.ActionLink("Innskrá", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+
+</section>

@@ -1,0 +1,346 @@
+﻿@model Tic_Tack_Jack.Models.Game
+@{
+    ViewBag.Title = "TicTacToe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ <header><aside>@Html.Partial("_ChatPartial")</aside></header>
+<h2 id="Tichead">TicTacToe</h2>
+<div id="tictactoe">
+<table id="tictable">
+        <tbody>
+                <tr>
+                        <td id="1_1" class = "t1_1">&nbsp;</td>
+                        <td id="1_2" class = "t1_2">&nbsp;</td>
+                        <td id="1_3" class = "t1_3">&nbsp;</td>
+                </tr>
+                <tr>
+                        <td id="2_1" class = "t2_1">&nbsp;</td>
+                        <td id="2_2" class = "t2_2">&nbsp;</td>
+                        <td id="2_3" class = "t2_3">&nbsp;</td>
+                </tr>
+                <tr>
+                        <td id="3_1" class = "t3_1">&nbsp;</td>
+                        <td id="3_2" class = "t3_2">&nbsp;</td>
+                        <td id="3_3" class = "t3_3">&nbsp;</td>
+                </tr>
+        </tbody>
+</table>
+</div>
+    <div id="endgame">
+        <table id="gametable">
+            <tr>
+                <th><p id="statusT"></p><th>
+            </tr>
+            <tr>
+                <td id="clearstats">New Game<td>
+                <td id="Owner"></td>
+                <td id="Opponent"></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="clear"  value="Clear!" /></td>
+                <td></td>
+                <td id="ownerPoints">0</td>
+                <td id="oppPoints">0</td>
+            </tr>
+        </table>
+        <button id="end" onclick="closeGame()">End game</button>
+    </div>
+<div>
+    <h2>Reglur<h2>
+    <h4>Myllu leikur virkar á eftirfarandi hátt:</h4>
+        <ul>
+            <li>Sá sem bjó til leikinn byrjar.</li>
+            <li>Sá sem nær sínu merki (X eða O) í beina línu (lárétt, lóðrétt eða skáhallt) fyrst vinnur leikinn.</li>
+            <li>Sá sem vinnur fær stig</li>
+            <li>Ef enginn vinnur og borðið fyllist þá er jafntefli</li>
+            <li>Til að hreinsa borðið og byrja nýjann leik þá ýtiði á "clear" takkann</li>
+            <li>Ef ýtt er á Ljúka leik takkann þá endar leikurinn og leikmenn eru sendir aftur á leikjasíðuna</li>
+            <li>Stig eru gefin til prófils notenda þegar ýtt er á "ljúka leik" takkann</li>
+       </ul>
+</div>
+<script>
+    $(function () {
+        var owner = '@Model.owner'; /*Breyta fyrir þann sem stofnaði leikinn */
+        var opp = '@Model.player2';/*Breyta fyrir þann sem tekur spilar á móti "owner"*/
+        var group = '@(Model.ID)';/*Breyta gerð til að tilgreina tilvikið af leik sem er verið að spila, þeir sem eru í þessu group eru að spila á móti hort öðru*/
+        var hub = $.connection.gameHub; /*Breyta gerð fyrir tengingu við gameHub klasann*/
+        var myturn = true; /*Breyta sem segir til um það hvort leikmaður eigi að gera eða ekki*/
+
+        function addPlayer(userName) {
+            $("#Opponent").text(userName);/*Þegar andstæðingur tekur þátt í leiknum þá breytist #Opponent textaboxið í username andstæðingsins*/
+        }
+        /*Þetta fall tengir leikinn við gameHub með SignalR þannig að þegar andstæðingur merkir á eyðu, 
+        þá merkist hún líka samtímis hjá notanda sem spilar á móti honum*/
+        hub.client.cellClicked = function (cellId) {
+            if ($("#" + cellId).text() != "X" && $("#" + cellId).text() != "O") {
+                $("#Owner").text(owner);
+                $("#Opponent").text(opp);
+                $("#" + cellId).text("O");/*Svæðið sem andstæðingurinn merkti á verður "O"*/
+                myturn = true;/*Leikmaður á að gera*/
+                win();/*Checkað hvort það sé búið að vinna eða leikur sé búinn*/
+            }
+        };
+        /*þetta fall stýrir því að þegar andstæðingur klikkar á "clear" 
+        takkann þá hreinsanst líka myllu borðið hjá leikmanninum*/
+        hub.client.clearClicked = function (clearID) {
+            $("#clearstats").text("Opponent Cleared, New Game");
+            clearGrid();/*Kallað á fallið sem hreinsar borðið*/
+        };
+
+        hub.client.endClicked = function () {/*Fallið sem stýrir því þegar slökkt er á leiknum*/
+            $("statusT").text("Leik lokið!");/*Þegar klikkað er á Ljúka leik takkann, þá ræsist closeGame fallið.*/
+            closeGame();
+        }
+
+        setTimeout(function () {
+            hub.server.join(group);/*tengir notendurna saman með SignalR*/
+            hub.server.addPlayer(group, "@Model.player2");/*Tengja andstæðinginn við leikinn*/
+            $("#Owner").text(owner);/*Birta nafn leikmanns undir borðið*/
+            $("#Opponent").text(opp);/*Birta nafn andstæðings undir borðið*/
+
+            $("#tictactoe tr td").click(function () {/*Þegar leikmaður klikkar á borðið*/
+                /*Þá er checkað hvort hann megi geri, hvort það sé ekki búið að vinna 
+                og hvort að það sé búið að merkja í allar eyður*/
+                if (myturn === true && win() === false && checkIfFull() === false) {
+                    {
+                        /*Tilgreinir hvaða eyðu leikmaður klikkaði á 
+                        og kallað á clickCell fallið í Gamehub klasanum*/
+                        hub.server.clickCell(group, this.id);
+                        /*ef eyðan sem hann klikkar á er tómt*/
+                        if ($(this).text() != "X" && $(this).text() != "O") {
+                            /*Þá birtist "X" í eyðuna*/
+                            $(this).text("X");
+                            myturn = false;/*Og hann má ekki lengur gera*/
+                            win();/*Checkað hvort hann hafi unnið eða leiknum sé lokið*/
+                        }
+                    }
+                }
+            });
+            $("#clear").click(function () {
+                /*Þetta fall sér um að hreinsa borðið hjá leikmanni þegar han smellir á það*/
+                hub.server.clickClear(group, "#clear");
+                $("#clearstats").text("New Game");
+                clearGrid();/*kallar á fallið sem hreinsar borðið*/
+            });
+            $("#end").click(function () {
+                /*Þegar leikmaður smellir á "End Game" takkann 
+                þá á leiknum að ljúka hjá báðum leikmönnum*/
+                hub.server.clickEnd(group);
+                //closeGame();
+            });
+        }, 3000);;
+    });
+    //});
+
+
+    function closeGame() {
+        /*Þetta fall sér um það að loka leiknum og gefa stig til leikmannana sem tóku þátt*/
+            $("#clear").hide();
+            $("#clearstats").hide();
+            $("#end").hide();
+            var ownerPoints = document.getElementById("ownerPoints");
+            var oppPoints = document.getElementById("oppPoints");
+            var ownerWins = parseInt(ownerPoints.innerHTML);
+            var oppWins = parseInt(oppPoints.innerHTML);
+            var ownerName = "@Model.owner";
+            var oppName = "@Model.player2";
+            var gameID = "@Model.ID";
+        var url = '@Url.Action("TicTacToe", "Game")';
+        if ("@WebSecurity.CurrentUserName" == ownerName) {
+            $.post(url, { id: gameID, owner: ownerWins, opp: oppWins, oN: ownerName, oppN: oppName }, function (data) { });
+        }
+        myturn = false;
+        $("#tictable").hide();
+        var changeStatus = document.getElementById("statusT");
+        changeStatus.innerHTML = "Leik lokið!";
+    }
+
+
+    function clearGrid()//hreinsar myllu borðið af öllum merkjum
+    {
+        var change;
+        /*Tvöföld for-loopa til af ferðast um allt borðið*/
+        for (var nRow = 1; nRow < 4; nRow++) {
+            for (var nColl = 1; nColl < 4; nColl++) {
+                /*breytum hverju merki á borðinu í eyðu*/
+                change = document.getElementById(nRow + "_" + nColl);
+                change.innerHTML = "&nbsp;";
+            }
+        }
+        var changeStatus = document.getElementById("statusT");
+        changeStatus.innerHTML = "";
+    }
+    function checkX() //checkar hvort X hafi unnið
+    {
+        var one;
+        var two;
+        var three;
+
+        /*Hérna eru allar þær leiðir til að vinna myllu harðkóðaðar niður. 
+        Fallið sér um að checka á hverri og einustu og ef ein af þeim reynist vera sönn
+        þá returnar fallið TRUE, en ef ekki er farið inn í neina af if-setningunum 
+        þá skilar fallið FALSE og þá X ekki búið að vinna*/
+
+        /*Bein röð*/
+        one = document.getElementById("1_1");
+        two = document.getElementById("1_2");
+        three = document.getElementById("1_3");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        one = document.getElementById("2_1");
+        two = document.getElementById("2_2");
+        three = document.getElementById("2_3");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        one = document.getElementById("3_1");
+        two = document.getElementById("3_2");
+        three = document.getElementById("3_3");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        one = document.getElementById("1_1");
+        two = document.getElementById("2_1");
+        three = document.getElementById("3_1");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        one = document.getElementById("1_2");
+        two = document.getElementById("2_2");
+        three = document.getElementById("3_2");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        one = document.getElementById("1_3");
+        two = document.getElementById("2_3");
+        three = document.getElementById("3_3");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        /*Skáhallandi röð*/
+        one = document.getElementById("1_1");
+        two = document.getElementById("2_2");
+        three = document.getElementById("3_3");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        one = document.getElementById("3_1");
+        two = document.getElementById("2_2");
+        three = document.getElementById("1_3");
+        if (one.innerHTML === "X" && two.innerHTML === "X" && three.innerHTML === "X") {
+            return true;
+        }
+        return false;
+    }
+    function checkO() //checkar hvort O hafi unnið
+    {
+        var one;
+        var two;
+        var three;
+
+
+        one = document.getElementById("1_1");
+        two = document.getElementById("1_2");
+        three = document.getElementById("1_3");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        one = document.getElementById("2_1");
+        two = document.getElementById("2_2");
+        three = document.getElementById("2_3");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        one = document.getElementById("3_1");
+        two = document.getElementById("3_2");
+        three = document.getElementById("3_3");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        one = document.getElementById("1_1");
+        two = document.getElementById("2_1");
+        three = document.getElementById("3_1");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        one = document.getElementById("1_2");
+        two = document.getElementById("2_2");
+        three = document.getElementById("3_2");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        one = document.getElementById("1_3");
+        two = document.getElementById("2_3");
+        three = document.getElementById("3_3");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        one = document.getElementById("1_1");
+        two = document.getElementById("2_2");
+        three = document.getElementById("3_3");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        one = document.getElementById("3_1");
+        two = document.getElementById("2_2");
+        three = document.getElementById("1_3");
+        if (one.innerHTML === "O" && two.innerHTML === "O" && three.innerHTML === "O") {
+            return true;
+        }
+        return false;
+    }
+    function win() //skilgreinir hvort/hver hafi unnið
+    {
+        var status = document.getElementById("statusT");/*Náð í tenginu við stöðu leiksins*/
+        var who = checkX();/*Gert breyta fyrir að checka hvort leikmaður hafi unnið*/
+        var what = checkO();/*Gerð breyta fyrir að checka hvort að andstæðingur hafi unnið*/
+        var Upoints = document.getElementById("ownerPoints");
+        var Opoints = document.getElementById("oppPoints");
+        if (who === true) {/*Ef leikmaður vann þá er farið í þetta fall..*/
+            if ("@WebSecurity.CurrentUserName" == "@Model.owner") {
+                    status.innerHTML = "@Model.owner vann!";
+                    Upoints.innerHTML = 1 + parseInt(Upoints.innerHTML);
+                }
+                else {
+                    status.innerHTML = "@Model.player2 vann!";
+                    Opoints.innerHTML = 1 + parseInt(Upoints.innerHTML);
+                }
+                status.innerHTML = winner;
+                return true;
+            }
+        else if (what === true) {/*ef andstæðingurinn vann*/
+                if ("@WebSecurity.CurrentUserName" == "@Model.owner") {
+                    status.innerHTML = "@Model.player2 vann!";
+                    Opoints.innerHTML = 1 + parseInt(Upoints.innerHTML);
+                }
+                else {
+                    status.innerHTML = "@Model.owner vann!";
+                    Upoints.innerHTML = 1 + parseInt(Upoints.innerHTML);
+                }
+                return true;
+        }
+        return false;
+    }
+    /*Þetta fall athugar hvor að það sé búið að fylla út allar eyður á borðinu*/
+    function checkIfFull() {
+        var checker;
+        var counter = 0;
+        var status = document.getElementById("statusT");
+        for (var nRow = 1; nRow < 4; nRow++) {
+            for (var nColl = 1; nColl < 4; nColl++) {
+                checker = document.getElementById(nRow + "_" + nColl);
+                if (checker === "X" && checker === "O") {
+                    counter++;
+                }
+            }
+        }
+        if (counter === 9) {
+            status.innerHTML = "Jafntefli!";
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>

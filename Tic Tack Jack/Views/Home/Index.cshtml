@@ -1,0 +1,77 @@
+﻿@model Tic_Tack_Jack.Models.Frontpage
+@{
+    ViewBag.Title = "Tic Tac Jack";
+}
+<header>
+    <aside>
+        @Html.Partial("_ChatPartial")
+    </aside>
+    <div class="Top">
+        <form>
+            <fieldset id="Top-Players">
+                <legend>Stigaleiðtogar</legend>
+                <table>
+                    @foreach (var m in Model.userstats.Take(4))
+                    {<tr class="Top-Nafn">
+                        <td id="Top-User"><a href="/Home/ProfilePage/@m.ID">@m.userName</a></td>
+                        <td id="Top-Wins">Sigrar: @m.TICWins</td>
+                    </tr>}
+                </table>
+
+            </fieldset>
+        </form>
+        <form>
+            <fieldset>
+                <legend>Vinsælustu leikrinir</legend>
+                <table id="Top-Game">
+                    <tr>
+                        @if (Request.IsAuthenticated)
+                        {
+                        <td><a href="~/Game/MyllaLobby">
+                            <img class="Game-image" src="~/Images/TicTacToe.png" /></a></td>
+                        <td><a href="~/Game/blackjack"><img class="Game-image" src="~/Images/blackjack.jpg"></a></td>
+                        }
+                        else
+                        {
+                        <td><a href="~/Account/Login">
+                            <img class="Game-image" src="~/Images/TicTacToe.png" /></a></td>
+                        <td><a href="~/Account/Login"><img class="Game-image" src="~/Images/blackjack.jpg"></a></td>  
+                        }
+                    </tr>
+                    <tr>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <td class="Play-game">@Html.ActionLink("Spila", "Index", "Game") </td>
+                            <td class="Play-game">@Html.ActionLink("Spila", "Index", "Game") </td>}
+                        else
+                        {
+                            <td class="Play-game">@Html.ActionLink("Innskrá", "Login", "Account", routeValues: null,
+                            htmlAttributes: new { id = "loginLink" })</td>
+                            <td class="Play-game">@Html.ActionLink("Innskrá", "Login", "Account", routeValues: null,
+                            htmlAttributes: new { id = "loginLink" })</td>}
+                    </tr>
+                </table>
+            </fieldset>
+        </form>
+    </div>
+</header>
+<body>
+    @if (Model.Status == 2)
+    {
+        @Html.ActionLink("Búa til nýja frétt!", "createNews", "Home");
+    }
+    <section class="News-Section">
+    @foreach(var n in Model.news)
+        {<div class="News">
+            <form class="News">
+                <fieldset>
+                    <legend>@n.Title</legend>
+                    <p class="author">By: @n.Author </p>
+                    <p class="postdate">@n.postdate.ToShortDateString()</p>
+                    <p class="content">@n.Content</p>
+                </fieldset>
+            </form>
+        </div>}
+    </section>
+
+</body>

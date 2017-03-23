@@ -1,0 +1,66 @@
+﻿@model Tic_Tack_Jack.Models.LocalPasswordModel
+@{
+    ViewBag.Title = "Mínar síður";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+<header>
+    <aside >
+        @Html.Partial("_ChatPartial")
+    </aside>
+</header>
+<body>
+<p class="message-success">@ViewBag.StatusMessage</p>
+    <div id="MyProfile">
+        <fieldset id="Userinfo">
+            <legend>Minn aðgangur</legend>
+            <img id="ProfileMyndir" src="~/Images/Chomp.jpg" />
+            <div id="UserStuff">
+                @User.Identity.Name <br />
+                Like stig: @Model.Likes <br />
+                Chips: @Model.Chips
+            </div>
+                <!--<img id="Likes" src="~/Images/Likes.png" />-->
+                <!--button til að géfa Læk-->
+            <form>
+                <input id="Change-Password" type="button" value="Breyta lykilorði" />
+                <div class="Change_Password" hidden>
+                    @if (ViewBag.HasLocalPassword)
+                    {
+                        @Html.Partial("_ChangePasswordPartial")
+                    }
+                    else
+                    { 
+                        @Html.Partial("_SetPasswordPartial")
+                    }
+                </div>
+            </form>
+        </fieldset>
+        <fieldset id="UserStats">
+            <legend>Mín stig</legend>
+            <form>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th class="CenterStuff"> Sigrar </th>
+                        <th class="CenterStuff"> Tap </th>
+                    </tr>
+                    <tr>
+                        <th>Tic Tac Toe</th>
+                        <td class="CenterStuff">
+                            @Model.TICWins
+                        </td>
+                        <td class="CenterStuff">
+                            @Model.TICLoss
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </fieldset>
+    </div>
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

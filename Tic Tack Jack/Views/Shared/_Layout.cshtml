@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/Site.css")
+        @Styles.Render("~/Content/blackjack.css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/Scripts/Site.js")
+        @*@Scripts.Render("~/Scripts/blackjack.js")*@
+        @Scripts.Render("~/Scripts/jquery-1.7.1.min.js")
+		@Scripts.Render("~/Scripts/jquery.signalR-1.1.0.min.js")
+        @Scripts.Render("~/Scripts/Site.js")
+        @Scripts.Render("~/signalr/hubs")
+        @*@Scripts.Render("~/Scripts/TicTacToe.js")*@
+    </head>
+    <body>
+        <header>
+            <section class="User-Info">
+                    <!--Profile Pic-->
+                    <!--Temp Profile pic-->
+                    <img id="Mynd" src="~/Images/Chomp.jpg" />
+                <div id="login">
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </section>
+                <div>
+                    <a href="~/Home/Index"> <img alt="Tic Tac Jack Logo" src="~/Images/Tic Tac Jack ALPHA.png" /></a>
+                    <!--<p class="site-title">{att}Html.ActionLink("Tic Tac Jack", "Index", "Home")</p>-->
+                </div>
+            <div class="content-wrapper">
+                <div class="float-left">
+                     <nav>
+                         <ul id="menu">
+                            <li>@Html.ActionLink("Forsíða", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Leikir", "Index", "Game")</li>
+                            <li>@Html.ActionLink("Spjallborð", "Index", "Forums")</li>
+                            <li>@Html.ActionLink("Stigatafla", "Stigatafla", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+             </div>
+        </header>
+        <div id="body">
+            <!--<a id="Chatbuttn" href="#" >Click here to open new window</a>-->
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <iframe id="EasterEgg" src="http://adultcatfinder.com/embed/" hidden></iframe>
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

@@ -1,0 +1,141 @@
+/* Spilaborð */
+#bjcontainer
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	background-color: #A62A2A;
+	height: 570px;
+	width: 900px;
+}
+
+/* Reglur */
+#bjrules
+{
+	width:900px;
+}
+
+/* Svæði leikmanns */
+.playingField 
+{
+	border: 1px solid #8C1717;
+	color: #000000;
+	float: left;
+	margin: 2px;
+	padding: 2px;
+	text-align: left;
+	width: 290px;
+}
+
+/* Svæði virks leikmanns */
+.activeField 
+{
+	background-color: #CD5555;
+}
+
+/* Svæði fyrir spil */
+.cardArea
+{
+	font-size: 20pt;
+	height: 180px;
+	position: relative;
+}
+
+/* Textabox leikmanna */
+.textBox
+{
+	background-color: #EEE9E9;
+	border: 1px solid #8C1717;
+	clear: right;
+	color: #000000;
+	float: right;
+	font-weight: bold;
+	margin-bottom: 5px;
+	padding: 2px;
+	text-align: center;
+	width: 130px;
+}
+
+/* Nöfn leikmanna */
+.name
+{
+	background-color: #802A2A;
+	border-color: #000;
+	color: #fff;
+	float: left;
+	width:130px;
+}
+
+/* Reitir niðurstöðu leikmanna */
+.result .dollars .lost
+{
+	color: #802A2A;
+}
+
+/* Stjórnborð */
+.center
+{
+	border: 1px solid #A62A2A;
+	float: left;
+	margin: 2px;
+	padding: 2px;
+	text-align: center;
+	height: 180px;
+	width: 290px;
+}
+
+/* Veðmál sem leikmaður ætla að leggja undir */
+#betting
+{
+	background-color: #EEE9E9;
+	border: 1px solid #802A2A;
+	font-size: 12pt;
+	margin: 5px auto;
+	padding: 5px;
+	width: 160px;
+}
+
+/* Takki til að setjast við borðið */
+.sitdown
+{
+	display: block;
+	margin: 5px auto;
+}
+
+/* Spil */
+.card
+{
+	background-image: url("../Images/blackjack/cardback.png");
+	border: 1px solid #000;
+	font-size: 5pt;
+	margin-top: 25px;
+	position: absolute;
+	width:  37px;
+	height: 50px;
+}
+
+/* Framhlið spils */
+.front
+{
+	background-color: #ffffff;
+	color: #000000;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+/* Lita rauð spil */
+.red
+{
+	color: #ff0000;
+}
+
+/* Stafur og sort spils */
+.index
+{
+	font-size: 200%;
+	font-weight: bold;
+	text-align: center;
+	position: absolute;
+	left: 0.25em;
+	top:  0.25em;
+}

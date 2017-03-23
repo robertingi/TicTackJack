@@ -1,0 +1,363 @@
+﻿html {
+    /*background-image: url(/images/Backimg.jpg);*/
+    background-color: #336699;
+}
+body {
+    margin: 11px;
+    margin-right: 14px;
+}
+#body{
+    background-color: #FFCC66;
+    padding: 1%;
+    height: 600px;
+    clear: both;
+    border-radius: 10px;
+}
+article {
+    float: left;
+    width: 70%;
+}
+
+aside {
+    float: right;
+    width: 25%;
+}
+
+    aside ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        aside ul li {
+            background: url("../Images/bullet.png") no-repeat 0 50%;
+            padding: 2px 0 2px 20px;
+        }
+
+.label {
+    font-weight: 700;
+}
+.User-Info {
+    float: right;
+    padding-top: 30px;
+    padding-right: 30px;
+}
+/* FrontPage
+----------------------------------------------------------*/
+.Top {
+    float: right;
+    width: 30%;
+    height: 200px;
+    padding-right: 10px;
+}
+#Top-Players::-webkit-scrollbar  {
+    width: 12px;
+}
+#Top-Players::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+#Top-Players::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+#Top-Players {
+    height: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+#Top-Game {
+   padding-left: 20px;
+}
+#Top-Wins {
+    padding-top: 20px;
+    padding-left: 40px;
+}
+#Top-User {
+    padding-top: 20px;
+    padding-left: 40px;
+}
+.Game-image {
+    height: 150px;
+    width: 150px;
+}
+.Play-game {
+    padding-left: 50px;
+}
+/* EasterEgg
+----------------------------------------------------------*/
+#EasterEgg {
+    border-width: 0px;
+    position: fixed;
+    bottom: 0px;
+    right: 10px;
+    z-index: 100;
+    width: 320px;
+    height: 430px;
+}
+
+/* Chat
+----------------------------------------------------------*/
+
+#discussion
+{
+    overflow-y: auto;
+    background-color: #fff;
+    max-height: 400px;
+    max-width: 300px;
+    height: 400px;
+    width: 300px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+}
+#discussion::-webkit-scrollbar  {
+    width: 12px;
+}
+#discussion::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+#discussion::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+.container {
+    height: 400px;
+    width: 300px;
+}
+#message {
+    border-radius: 20px;
+    width: 232px;
+    border-width: 0px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+#sendmessage
+{
+    border-radius: 20px;
+    color: Background;
+}
+/*---Profile---*/
+#Like {
+    height: 40px;
+    width: 40px;
+}
+
+/*---News---*/
+.News {
+    width: 550px;
+    padding-right: 750px;
+}
+.News-Section {
+    overflow-y: auto;
+    overflow-x:hidden;
+    max-height: 550px;
+    margin-right: 725px;
+}
+.News-Section::-webkit-scrollbar  {
+    width: 12px;
+
+}
+.News-Section::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+.News-Section::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+/*---Menu---*/
+ul#menu {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 7px 0px 5px 0px;
+    padding: 0;
+    text-align: left;
+}
+ul#menu li {
+    display: inline;
+    list-style: none;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+ul#menu li a {
+    background: none;
+    color: #ddd;
+    text-decoration: none;
+}
+ul#menu li a:hover {
+    color: #ABABAB;
+    text-decoration: none;
+}
+/*---Login---*/
+#login {
+    display: block;
+    font-size: .85em;
+    margin: 0px 0px 10px;
+    text-align: right;
+    padding-right: 60px;
+    padding-top: 25px;
+}
+#login a {
+    background-color: none;
+    color: #ddd;
+    margin-left: 10px;
+    margin-right: 3px;
+    padding: 2px 3px;
+    text-decoration: none;
+}
+#login a.username {
+    background: none;
+    margin: 0px;
+    padding: 0px;
+    text-decoration: underline;
+}
+#login ul {
+    margin: 0px;
+}
+#login li {
+    list-style: none;
+}
+#Mynd {
+    float: right;
+    background-color:black;
+    border: 1px solid violet;
+    padding: 4px;
+    padding-bottom: 1px;
+}
+/* forms
+fieldset {
+    border: solid;
+    border-width: 2px;
+    border-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+    fieldset legend {
+        display: inline;
+    }
+
+    fieldset ol {
+        padding: 0;
+        list-style: none;
+    }
+
+        fieldset ol li {
+            padding-bottom: 5px;
+        }*/
+/*---Float stuff---*/
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+/*tictactoe
+    ----------------------------------*/
+#tictactoe tr td
+{
+    /*border: solid 1px red;*/
+    padding: 50px;
+    font-size:xx-large;
+}
+#statusT
+{
+    font-size: 25px;
+}
+#endgame
+{
+    margin-left: 500px;
+}
+#tictactoe
+{
+    margin-left: 500px;
+}
+#Tichead
+{
+    margin-left: 620px;
+}
+.t1_1
+{
+    border-right:solid 1px red;
+    border-bottom:solid 1px red;
+}
+.t1_2
+{
+    border-right:solid 1px red;
+    border-left:solid 1px red;
+    border-bottom:solid 1px red;
+}
+.t1_3
+{
+    border-left:solid 1px red;
+    border-bottom:solid 1px red;
+}
+.t2_1
+{
+    border-top:solid 1px red;
+    border-right:solid 1px red;
+    border-bottom:solid 1px red;
+}
+.t2_2
+{
+    border:solid 1px red;
+}
+.t2_3
+{
+    border-left:solid 1px red;
+    border-top:solid 1px red;
+    border-bottom:solid 1px red;
+}
+.t3_1
+{
+    border-right:solid 1px red;
+    border-top:solid 1px red
+}
+.t3_2
+{
+    border-top:solid 1px red;
+    border-right:solid 1px red;
+    border-left:solid 1px red;
+}
+.t3_3
+{
+    border-left:solid 1px red;
+    border-top:solid 1px red;
+}
+/*TicTacLobby
+    -----------------------------------*/
+#ticlobby ul li
+{
+    list-style:none;
+}
+#ticlobby
+{
+   margin-left: 500px;
+}
+/*---Normal stuff---*/
+h1 {
+    padding-right:10%;
+}
+/*---Profile---*/
+#Userinfo, #UserStats {
+    margin-right:24%;
+}
+#ProfileMyndir {
+    width: 88px;
+    height: 86px;
+    float:left;
+    margin-top: 5px;
+    margin: 6px;
+}
+#Likes {
+    margin-left:-94px;
+}
+#UserStuff {
+    padding:28px;
+}
+#Change-Password {
+    margin-left:-95px;
+    margin-top:5px;
+    margin-bottom:5px;
+}

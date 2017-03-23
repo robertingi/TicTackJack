@@ -1,0 +1,50 @@
+﻿@model Tic_Tack_Jack.Models.LoginModel
+
+@{
+    ViewBag.Title = "Innskráning";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<section id="loginForm">
+<h2>Notaðu aðganginn þinn til að innskrá</h2>
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Innskráning</legend>
+        <table>
+            <tr>
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+            </tr>
+            <tr>
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </tr>
+            <tr>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+            </tr>
+        </table>
+        <input type="submit" value="Innskrá" />
+    </fieldset>
+    <p>
+        @Html.ActionLink("Nýskrá", "Register", "Account") Ef þú hefur ekki aðgang.
+    </p>
+}
+</section>
+
+<section class="social" id="socialLoginForm">
+    <h2>Tengstu með öðrum reikning</h2>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

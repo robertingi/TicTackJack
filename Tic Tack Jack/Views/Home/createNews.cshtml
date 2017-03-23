@@ -1,0 +1,31 @@
+﻿@model Tic_Tack_Jack.Models.News
+@{
+    ViewBag.Title = "createNews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>Ný Frétt</legend>
+        <table>
+            <tr>
+                <td>@Html.LabelFor(m => m.Title)</td>
+                <td>@Html.TextBoxFor(m => m.Title)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Content)</td>
+                <td>@Html.TextAreaFor(m => m.Content)</td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(m => m.Author, new { @Value = WebSecurity.CurrentUserName, @type = "hidden" })</td>
+            </tr>
+            <tr>
+                <td>@Html.TextBoxFor(m => m.postdate, new { @Value = DateTime.Now.ToString(), @type = "hidden" })</td>
+            </tr>
+        </table>
+        <input type="submit" value="Register" />
+    </fieldset>
+}
